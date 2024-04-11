@@ -38,6 +38,14 @@ function createSolar() {
     const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.2);
     solarSystem.add(ambientLight);
 
+    // Créer une boucle de rendu
+    solarSystem.setTime = function(time){
+        earthMoonSystem.rotation.y = time/28;
+        earth.rotation.y = time;
+        solarSystem.rotation.y = time/365;
+    }
+
+
     return solarSystem;
 }
 
@@ -70,11 +78,13 @@ const camera = new THREE.PerspectiveCamera(75,
 const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.z = 10;
 
-// Créer une boucle de rendu
 function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    let chrono = Date.now() * 1;
+    solarSystem.setTime(chrono/40);
+    controls.update();
+    renderer.render(scene, camera);
 }
+
 
 animate();
