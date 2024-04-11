@@ -5,11 +5,21 @@ function createSolar() {
     // Créer le groupe pour le système solaire
     const solarSystem = new THREE.Group();
 
+    const textureLoader = new THREE.TextureLoader();
+
+    // Charger les textures
+    const sunTexture = textureLoader.load('assets/sun.jpg');
+    const earthTexture = textureLoader.load('assets/earthmab.jpg');
+    const moonTexture = textureLoader.load('assets/moonb.jpg');
+
     // Créer le soleil
-    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFDD99, emissive: 0xFFDD99, emissiveIntensity: 0.75 });
+    const sunMaterial = new THREE.MeshBasicMaterial({map: sunTexture, emissive: 0xFFDD99, emissiveIntensity: 0.75 });
     const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
     const sun = new THREE.Mesh(sunGeometry, sunMaterial);
     solarSystem.add(sun);
+    // Créer la lumière ponctuelle pour le soleil
+    const sunLight = new THREE.PointLight(0xFFFFFF, 100, 0);
+    sun.add(sunLight);
 
     // Créer le groupe pour le système Terre-Lune
     const earthMoonSystem = new THREE.Group();
@@ -17,22 +27,21 @@ function createSolar() {
     earthMoonSystem.position.x = 6;
 
     // Créer la terre
-    const earthMaterial = new THREE.MeshPhongMaterial({ color: 0x5588DD, shininess: 10, specular: 0x888888 });
+    const earthMaterial = new THREE.MeshPhongMaterial({map: earthTexture, shininess: 10, specular: 0x888888 });
     const earthGeometry = new THREE.SphereGeometry(0.5, 32, 32);
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     earthMoonSystem.add(earth);
 
     // Créer la lune
-    const moonMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 });
+    const moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture});
     const moonGeometry = new THREE.SphereGeometry(0.2, 32, 32);
     const moon = new THREE.Mesh(moonGeometry, moonMaterial);
     earthMoonSystem.add(moon);
     moon.position.x = 1.6;
 
-    // Ajouter une lumière ponctuelle à l'origine
-    const pointLight = new THREE.PointLight(0xFFFFFF, 1, 0);
-    pointLight.position.set(0, 0, 0);
-    solarSystem.add(pointLight);
+    // Créer une lumière ponctuelle pour la lune
+    const moonLight = new THREE.PointLight(0xFFFFFF, 0.5, 0);
+    moon.add(moonLight);
 
     // Ajouter une faible lumière ambiante
     const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.2);
@@ -78,9 +87,31 @@ const camera = new THREE.PerspectiveCamera(75,
 const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.z = 10;
 
+// Charger la texture du ciel étoilé
+const starTexture = new THREE.TextureLoader().load('assets/Solarsystemscope_texture_8k_stars_milky_way.jpg');
+
+// Créer le matériau pour le ciel étoilé
+const starMaterial = new THREE.MeshBasicMaterial({
+    map: starTexture,
+    side: THREE.BackSide // Vue de l'intérieur
+});
+
+// Créer la géométrie pour le ciel étoilé
+const starGeometry = new THREE.SphereGeometry(1000, 32, 32);
+
+// Créer le mesh pour le ciel étoilé
+const starMesh = new THREE.Mesh(starGeometry, starMaterial);
+
+// Ajouter le ciel étoilé à la scène
+scene.add(starMesh);
+
+// Augmenter la distance de clipping de la caméra
+camera.far = 2000; // Deux fois le rayon de la sphère
+camera.updateProjectionMatrix(); // Mettre à jour la matrice de projection de la caméra
+
 function animate() {
     requestAnimationFrame(animate);
-    let chrono = Date.now() * 1;
+    let chrono = Date.now() * 0.1;
     solarSystem.setTime(chrono/40);
     controls.update();
     renderer.render(scene, camera);
