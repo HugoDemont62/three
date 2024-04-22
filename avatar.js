@@ -21,11 +21,23 @@ const headMaterial = new THREE.MeshBasicMaterial({color: 0xFFD700});
 const head = new THREE.Mesh(headGeometry, headMaterial);
 scene.add(head);
 
-const hatGeometry = new THREE.CylinderGeometry(0.75, 1, 1.5, 32);
-const hatMaterial = new THREE.MeshBasicMaterial({color: 0x8B4513});
-const hat = new THREE.Mesh(hatGeometry, hatMaterial);
-hat.position.y = 1.25;
-scene.add(hat);
+const hatTypeInput = document.getElementById('hatType');
+
+hatTypeInput.addEventListener('change', function(event) {
+  let newHatGeometry;
+  if (hatTypeInput.value === 'cylinder') {
+    scene.remove(hat);
+    newHatGeometry = new THREE.CylinderGeometry(0.75, 1, 1.5, 32);
+  } else if (hatTypeInput.value === 'cone') {
+    scene.remove(hat);
+    newHatGeometry = new THREE.ConeGeometry(0.75, 1.5, 32);
+  }
+
+  const hatMaterial = new THREE.MeshBasicMaterial({color: 0x8B4513});
+  const hat = new THREE.Mesh(newHatGeometry, hatMaterial);
+  hat.position.y = 1.25;
+  scene.add(hat);
+});
 
 const eyeGeometry = new THREE.SphereGeometry(0.1, 32, 32);
 const eyeMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
@@ -67,6 +79,7 @@ avatarForm.addEventListener('submit', function(event) {
   headMaterial.color.set(headColor);
   hatMaterial.color.set(hatColor);
   bodyMaterial.color.set(bodyColor);
+  x;
 });
 
 function animate() {

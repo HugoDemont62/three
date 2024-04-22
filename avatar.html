@@ -45,7 +45,6 @@
 
     #avatarForm input[type="color"] {
         border: none;
-        padding: 10px;
         border-radius: 5px;
     }
 
@@ -72,6 +71,12 @@
 
                 <label for="bodyColor">Couleur du corps:</label>
                 <input type="color" id="bodyColor" name="bodyColor" value="#0000FF">
+
+                <label for="hatType">Type de chapeau:</label>
+                <select id="hatType" name="hatType">
+                    <option value="cylinder">Cylindre</option>
+                    <option value="cone">Cône</option>
+                </select>
 
                 <input type="submit" value="Appliquer les modifications">
             </form>
