@@ -258,7 +258,7 @@ camera.position.z = 10;
 
 // Charger la texture du ciel étoilé
 const starTexture = new THREE.TextureLoader().load(
-  'assets/Solarsystemscope_texture_8k_stars_milky_way.jpg');
+  'assets/IMG_8870.jpg');
 
 // Créer le matériau pour le ciel étoilé
 const starMaterial = new THREE.MeshBasicMaterial({

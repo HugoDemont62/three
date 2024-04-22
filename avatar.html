@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>avatar</title>
+    <style>
+    body { margin: 0; }
+        .container {
+            display: flex;
+            justify-content: space-around;
+        }
+        .avatar {
+            flex: 0.5;
+            border: 1px solid black;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .inputs {
+            flex: 0.5;
+            border: 1px solid black;
+            height: 100vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="avatar" class="avatar"></div>
+        <div class="inputs">
+            <label for="colorPicker">
+                <input type="color" id="colorPicker" value="#00ff00">
+            </label>
+            <button onclick="updateColor(document.getElementById('colorPicker').value)">Change Color</button>
+        </div>
+    </div>
+    <script src="avatar.js"></script>
+</body>
+</html>
