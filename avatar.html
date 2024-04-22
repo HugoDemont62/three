@@ -6,34 +6,77 @@
     <title>avatar</title>
     <style>
     body { margin: 0; }
-        .container {
-            display: flex;
-            justify-content: space-around;
-        }
-        .avatar {
-            flex: 0.5;
-            border: 1px solid black;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .inputs {
-            flex: 0.5;
-            border: 1px solid black;
-            height: 100vh;
-            overflow: auto;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        display: flex;
+        justify-content: flex-start; /* Aligner les éléments à gauche */
+    }
+
+    .avatar {
+        flex: 0.5;
+        border: 1px solid black;
+        overflow: hidden;
+    }
+
+    .inputs {
+        flex: 0.5;
+        border: 1px solid black;
+        height: 100vh;
+        overflow: auto;
+        padding: 20px;
+    }
+
+    #avatarForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #avatarForm label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    #avatarForm input[type="color"] {
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    #avatarForm input[type="submit"] {
+        cursor: pointer;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #000;
+        color: #fff;
+    }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="avatar" class="avatar"></div>
         <div class="inputs">
-            <label for="colorPicker">
-                <input type="color" id="colorPicker" value="#00ff00">
-            </label>
-            <button onclick="updateColor(document.getElementById('colorPicker').value)">Change Color</button>
+            <form id="avatarForm">
+                <label for="headColor">Couleur de la tête:</label>
+                <input type="color" id="headColor" name="headColor" value="#FFD700">
+
+                <label for="hatColor">Couleur du chapeau:</label>
+                <input type="color" id="hatColor" name="hatColor" value="#8B4513">
+
+                <label for="bodyColor">Couleur du corps:</label>
+                <input type="color" id="bodyColor" name="bodyColor" value="#0000FF">
+
+                <input type="submit" value="Appliquer les modifications">
+            </form>
         </div>
     </div>
-    <script src="avatar.js"></script>
+    <script type="module" src="avatar.js"></script>
 </body>
 </html>

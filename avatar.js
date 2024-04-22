@@ -4,13 +4,15 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75,
-  window.innerWidth / window.innerHeight, 0.1, 1000);
+  (window.innerWidth / 2) / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000);
+const avatarDiv = document.getElementById('avatar');
+renderer.setSize(avatarDiv.clientWidth, window.innerHeight);
 document.getElementById('avatar').appendChild(renderer.domElement);
+
+renderer.setClearColor(0x000000);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -49,6 +51,23 @@ const bodyMaterial = new THREE.MeshBasicMaterial({color: 0x0000FF});
 const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
 body.position.y = -2;
 scene.add(body);
+
+const avatarForm = document.getElementById('avatarForm');
+const headColorInput = document.getElementById('headColor');
+const hatColorInput = document.getElementById('hatColor');
+const bodyColorInput = document.getElementById('bodyColor');
+
+avatarForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const headColor = headColorInput.value;
+  const hatColor = hatColorInput.value;
+  const bodyColor = bodyColorInput.value;
+
+  headMaterial.color.set(headColor);
+  hatMaterial.color.set(hatColor);
+  bodyMaterial.color.set(bodyColor);
+});
 
 function animate() {
   requestAnimationFrame(animate);
